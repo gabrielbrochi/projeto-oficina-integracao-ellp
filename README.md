@@ -139,7 +139,7 @@ Definição de requisitos, arquitetura, tecnologias e estratégia de testes. Ent
 docker compose up -d
 ```
 
-> As credenciais padrão de desenvolvimento são `postgres/postgres`, banco `oficinas_ellp`. As migrações são executadas automaticamente pelo Flyway na inicialização do back-end.
+> As credenciais padrão de desenvolvimento são `postgres/postgres`, banco `oficinas_ellp`. As tabelas são criadas automaticamente pelo Hibernate na inicialização do back-end.
 
 ### Back-end
 
@@ -192,8 +192,7 @@ projeto-oficina-integracao-ellp/
 │   │   ├── main/
 │   │   │   ├── java/com/ellp/oficinas/   ← código fonte
 │   │   │   └── resources/
-│   │   │       ├── application.properties
-│   │   │       └── db/migration/          ← scripts Flyway
+│   │   │       └── application.properties
 │   │   └── test/java/com/ellp/oficinas/  ← testes
 │   └── pom.xml
 ├── frontend/
