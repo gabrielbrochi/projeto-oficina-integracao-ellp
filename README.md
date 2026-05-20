@@ -136,7 +136,10 @@ Definição de requisitos, arquitetura, tecnologias e estratégia de testes. Ent
 
 ```bash
 # Sobe o PostgreSQL via Docker (porta 5432)
-docker compose up -d
+docker-compose up -d
+
+# Em sistemas com Docker mais recente (plugin compose integrado):
+# docker compose up -d
 ```
 
 > As credenciais padrão de desenvolvimento são `postgres/postgres`, banco `oficinas_ellp`. As tabelas são criadas automaticamente pelo Hibernate na inicialização do back-end.
@@ -147,13 +150,24 @@ docker compose up -d
 cd backend
 
 # Executar a aplicação
-./mvnw spring-boot:run
+mvn spring-boot:run
 
 # Executar os testes
-./mvnw test
+mvn test
 ```
 
 > As configurações de banco e JWT estão em `backend/src/main/resources/application.properties`. Em produção, sobrescreva via variáveis de ambiente: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` e `JWT_SECRET`.
+
+### Conta padrão
+
+Na primeira execução, o sistema cria automaticamente uma conta de administrador:
+
+| Campo | Valor |
+|---|---|
+| Usuário | `administrador` |
+| Senha | `administrador` |
+
+> O sistema solicitará a troca de senha no primeiro acesso.
 
 ### Front-end
 
