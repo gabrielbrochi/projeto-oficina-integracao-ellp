@@ -2,6 +2,8 @@
   <div class="container">
     <nav>
       <router-link to="/alunos">Alunos</router-link>
+      <router-link to="/oficinas">Oficinas</router-link>
+      <router-link to="/inscricoes">Inscrições</router-link>
       <router-link to="/usuarios">Gerenciar Usuários</router-link>
       <span>Olá, {{ auth.username }}</span>
       <button @click="sair">Sair</button>

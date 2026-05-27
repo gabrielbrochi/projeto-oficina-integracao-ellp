@@ -164,8 +164,8 @@ Na primeira execução, o sistema cria automaticamente uma conta de administrado
 
 | Campo | Valor |
 |---|---|
-| Usuário | `administrador` |
-| Senha | `administrador` |
+| Usuário | `admin` |
+| Senha | `admin` |
 
 > O sistema solicitará a troca de senha no primeiro acesso.
 

@@ -2,12 +2,16 @@
   <div class="container">
     <nav>
       <router-link to="/alunos">Alunos</router-link>
+      <router-link to="/oficinas">Oficinas</router-link>
+      <router-link to="/inscricoes">Inscrições</router-link>
       <router-link v-if="auth.isAdmin()" to="/usuarios">Gerenciar Usuários</router-link>
       <span>Olá, {{ auth.username }}</span>
       <button @click="sair">Sair</button>
     </nav>
 
     <h2>Gerenciamento de Alunos</h2>
+
+    <p v-if="erroApi" class="erro-api">{{ erroApi }}</p>
 
     <form @submit.prevent="editando ? atualizar() : criar()">
       <div class="form-grid">
@@ -25,7 +29,15 @@
         </div>
         <div>
           <label>Telefone</label>
-          <input v-model="form.telefone" minlength="10" title="Mínimo 10 dígitos (ex: (41) 99999-9999)" />
+          <input
+            v-model="form.telefone"
+            pattern=".{10,}"
+            title="Mínimo 10 dígitos (ex: (41) 99999-9999)"
+            :class="{ 'input-erro': telefoneInvalido }"
+          />
+          <span v-if="telefoneInvalido" class="erro-campo">
+            Mínimo 10 dígitos (ex: (41) 99999-9999)
+          </span>
         </div>
         <div>
           <label>Data de Nascimento</label>
@@ -47,7 +59,7 @@
         </div>
       </div>
       <div class="form-actions">
-        <button type="submit">{{ editando ? 'Atualizar' : 'Adicionar Aluno' }}</button>
+        <button type="submit" :disabled="telefoneInvalido">{{ editando ? 'Atualizar' : 'Adicionar Aluno' }}</button>
         <button v-if="editando" type="button" class="btn-cancelar" @click="cancelarEdicao">Cancelar</button>
       </div>
     </form>
@@ -82,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
 import api from '../api/axios.js'
@@ -92,8 +104,13 @@ const auth = useAuthStore()
 
 const hoje = new Date().toISOString().split('T')[0]
 
+const telefoneInvalido = computed(() =>
+  form.telefone.length > 0 && form.telefone.length < 10
+)
+
 const alunos = ref([])
 const editando = ref(null)
+const erroApi = ref('')
 const form = reactive({
   nome: '', ra: '', emailInstitucional: '', telefone: '',
   dataNascimento: '', curso: ''
@@ -105,21 +122,36 @@ async function carregar() {
 }
 
 async function criar() {
-  await api.post('/api/alunos', form)
-  resetForm()
-  await carregar()
+  erroApi.value = ''
+  try {
+    await api.post('/api/alunos', form)
+    resetForm()
+    await carregar()
+  } catch (e) {
+    erroApi.value = e.response?.data?.message || 'Erro ao cadastrar aluno.'
+  }
 }
 
 async function atualizar() {
-  await api.put(`/api/alunos/${editando.value}`, form)
-  cancelarEdicao()
-  await carregar()
+  erroApi.value = ''
+  try {
+    await api.put(`/api/alunos/${editando.value}`, form)
+    cancelarEdicao()
+    await carregar()
+  } catch (e) {
+    erroApi.value = e.response?.data?.message || 'Erro ao atualizar aluno.'
+  }
 }
 
 async function deletar(id) {
   if (confirm('Deseja excluir este aluno?')) {
-    await api.delete(`/api/alunos/${id}`)
-    await carregar()
+    erroApi.value = ''
+    try {
+      await api.delete(`/api/alunos/${id}`)
+      await carregar()
+    } catch (e) {
+      erroApi.value = e.response?.data?.message || 'Erro ao excluir aluno.'
+    }
   }
 }
 
@@ -164,6 +196,9 @@ nav span { margin-left: auto; }
 .full-width { grid-column: 1 / -1; }
 label { display: block; margin-bottom: 0.25rem; font-size: 0.9rem; }
 input, select { width: 100%; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+input.input-erro { border-color: #dc2626; }
+.erro-campo { display: block; margin-top: 0.2rem; font-size: 0.8rem; color: #dc2626; }
+.erro-api { color: #dc2626; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 4px; padding: 0.5rem 0.75rem; margin-bottom: 0.75rem; font-size: 0.9rem; }
 .form-actions { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
 button { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; background: #3b82f6; color: white; }
 .btn-cancelar { background: #6b7280; }
