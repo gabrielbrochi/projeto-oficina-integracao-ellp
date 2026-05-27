@@ -19,10 +19,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (!usuarioRepository.existsByUsername("administrador")) {
+        if (usuarioRepository.count() == 0) {
             Usuario admin = new Usuario();
-            admin.setUsername("administrador");
-            admin.setSenha(passwordEncoder.encode("administrador"));
+            admin.setUsername("admin");
+            admin.setSenha(passwordEncoder.encode("admin"));
             admin.setRole(Usuario.Role.ADMINISTRADOR);
             admin.setPrimeiroAcesso(true);
             usuarioRepository.save(admin);
