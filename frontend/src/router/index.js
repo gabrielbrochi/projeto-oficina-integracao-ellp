@@ -4,6 +4,9 @@ import LoginView from '../views/LoginView.vue'
 import TrocarSenhaView from '../views/TrocarSenhaView.vue'
 import UsuariosView from '../views/UsuariosView.vue'
 import AlunosView from '../views/AlunosView.vue'
+import OficinaListView from '../views/OficinaListView.vue'
+import OficinaFormView from '../views/OficinaFormView.vue'
+import InscricoesView from '../views/InscricoesView.vue'
 
 const routes = [
   { path: '/', redirect: '/alunos' },
@@ -11,6 +14,10 @@ const routes = [
   { path: '/trocar-senha', component: TrocarSenhaView, meta: { requiresAuth: true } },
   { path: '/usuarios', component: UsuariosView, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/alunos', component: AlunosView, meta: { requiresAuth: true } },
+  { path: '/oficinas', component: OficinaListView, meta: { requiresAuth: true } },
+  { path: '/oficinas/nova', component: OficinaFormView, meta: { requiresAuth: true } },
+  { path: '/oficinas/:id/editar', component: OficinaFormView, meta: { requiresAuth: true } },
+  { path: '/inscricoes', component: InscricoesView, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
