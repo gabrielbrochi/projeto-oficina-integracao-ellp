@@ -123,6 +123,28 @@ Definição de requisitos, arquitetura, tecnologias e estratégia de testes. Ent
 
 ---
 
+## 📊 Status do Projeto
+
+| Fase | Status |
+|---|---|
+| Fase 1 — Planejamento | ✅ Concluída |
+| Fase 2 — Sprint 1 | ✅ Concluída |
+| Fase 3 — Sprint 2 | ✅ Concluída |
+
+### Requisitos Implementados
+
+| ID | Descrição | Status |
+|---|---|---|
+| RF01 | Cadastrar usuários (professores e tutores) | ✅ Implementado |
+| RF02 | Autenticar usuários no sistema | ✅ Implementado |
+| RF03 | Gerenciar Oficinas (criar, editar, listar, excluir) | ✅ Implementado |
+| RF04 | Gerenciar Alunos (cadastrar, editar, listar, excluir) | ✅ Implementado |
+| RF05 | Inscrever alunos em uma oficina | ✅ Implementado |
+| RF06 | Registrar a presença de alunos em uma oficina | ✅ Implementado |
+| RF07 | Gerar certificados de participação | ✅ Implementado |
+
+---
+
 ## ⚙️ Configuração do Ambiente
 
 ### Pré-requisitos
