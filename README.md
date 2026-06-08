@@ -158,10 +158,8 @@ Definição de requisitos, arquitetura, tecnologias e estratégia de testes. Ent
 
 ```bash
 # Sobe o PostgreSQL via Docker (porta 5432)
-docker-compose up -d
+sudo docker-compose up -d
 
-# Em sistemas com Docker mais recente (plugin compose integrado):
-# docker compose up -d
 ```
 
 > As credenciais padrão de desenvolvimento são `postgres/postgres`, banco `oficinas_ellp`. As tabelas são criadas automaticamente pelo Hibernate na inicialização do back-end.
@@ -171,11 +169,12 @@ docker-compose up -d
 ```bash
 cd backend
 
+# Executar os testes
+mvn test
+
 # Executar a aplicação
 mvn spring-boot:run
 
-# Executar os testes
-mvn test
 ```
 
 > As configurações de banco e JWT estão em `backend/src/main/resources/application.properties`. Em produção, sobrescreva via variáveis de ambiente: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` e `JWT_SECRET`.
@@ -199,11 +198,12 @@ cd frontend
 # Instalar dependências
 npm install
 
+# Executar os testes
+npm test
+
 # Executar em modo de desenvolvimento
 npm run dev
 
-# Executar os testes
-npm test
 ```
 
 > O Vite proxy redireciona chamadas para `/api` ao back-end em `localhost:8080`, evitando problemas de CORS em desenvolvimento.
@@ -212,9 +212,9 @@ npm test
 
 ## 🔁 Processo de Desenvolvimento
 
-- Funcionalidades documentadas como **issues** no GitHub.
-- Desenvolvimento realizado em **branches** por feature, com pull requests para a branch principal.
-- Gestão de tarefas via **GitHub Projects** (Kanban com colunas: Backlog / In Progress / Review / Done).
+- Funcionalidades documentadas como **issues** no GitHub. (Não implementamos)
+- Desenvolvimento realizado em **branches** por feature, com pull requests para a branch principal. (Não implementamos)
+- Gestão de tarefas via **GitHub Projects** (Kanban com colunas: Backlog / In Progress / Review / Done). (Não implementamos)
 - Testes automatizados obrigatórios para cada funcionalidade implementada.
 
 ---
